@@ -1,6 +1,6 @@
 #include "drivers/stm32xx.h"
 
-void recover_from_task_fault() {
+void recover_from_task_fault1() {
 	NVIC_SystemReset();
 }
 
@@ -123,7 +123,7 @@ __attribute__((optimize("O0"))) void my_fault_handler_c(sContextStateFrame *fram
 	volatile uint32_t *cfsr_ptr = (volatile uint32_t *)0xE000ED28;
 	*cfsr_ptr |= *cfsr_ptr;
 	// the instruction we will return to when we exit from the exception
-	frame->return_address = (uint32_t)recover_from_task_fault;
+	frame->return_address = (uint32_t)recover_from_task_fault1;
 	// the function we are returning to should never branch
 	// so set lr to a pattern that would fault if it did
 	frame->lr = 0xdeadbeef;
